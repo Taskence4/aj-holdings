@@ -63,9 +63,10 @@ body {
 .logo {
   font-family: 'Jane Austen', cursive;
   font-weight: 400;
-  font-size: clamp(2.8rem, 9vw, 5.5rem);
+  font-size: clamp(1.9rem, 11vw, 5.5rem);
   color: #1c1c1a;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 /* Generic section */
@@ -207,6 +208,10 @@ body {
 
 /* Responsive tweaks */
 @media (max-width: 600px) {
+  .hero {
+    padding: 3rem 0.75rem;
+  }
+
   .two-col {
     gap: 2.5rem;
   }
