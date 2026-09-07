@@ -102,8 +102,77 @@ body {
   background: var(--blush);
 }
 
+.portfolio {
+  background: var(--cream);
+}
+
 .leader {
   background: var(--white);
+}
+
+/* Portfolio logo wall */
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 3rem 2.25rem;
+  align-items: center;
+  max-width: 1000px;
+  margin: 3.5rem auto 0;
+}
+
+.logo-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 82px;
+}
+
+.logo-cell img {
+  max-width: 100%;
+  max-height: var(--logo-h, 100%);
+  object-fit: contain;
+}
+
+/* Optical balance: wide wordmarks read larger than square marks
+   at equal height, so cap them lower. */
+.logo-cell img[alt="GH2 Solar"],
+.logo-cell img[alt="Pace Digitek"] {
+  --logo-h: 62%;
+}
+
+.logo-cell img[alt="88 Eighty Eight Pictures"],
+.logo-cell img[alt="Grew Solar"] {
+  --logo-h: 78%;
+}
+
+.logo-cell img[alt="Solana"] {
+  --logo-h: 68%;
+}
+
+.logo-cell img[alt="Trident Fruits"] {
+  --logo-h: 88%;
+}
+
+.logo-cell img[alt="Greenzo Energy"] {
+  --logo-h: 90%;
+}
+
+/* Logos rest as a uniform ink-toned wall so ten unrelated brand
+   palettes read as one set; colour returns on hover. */
+.logo-cell img {
+  filter: grayscale(1) brightness(0.45) contrast(1.1);
+  opacity: 0.9;
+}
+
+@media (hover: hover) {
+  .logo-cell img {
+    transition: filter 0.45s ease, opacity 0.45s ease;
+  }
+
+  .logo-cell:hover img {
+    filter: none;
+    opacity: 1;
+  }
 }
 
 /* Two column layout */
@@ -241,6 +310,27 @@ body {
   transition-delay: 0.12s;
 }
 
+/* Logo cells reveal with a soft stagger across each row */
+.logo-cell.reveal {
+  transform: translateY(16px);
+}
+
+.logo-cell.is-visible:nth-child(5n + 2) {
+  transition-delay: 0.07s;
+}
+
+.logo-cell.is-visible:nth-child(5n + 3) {
+  transition-delay: 0.14s;
+}
+
+.logo-cell.is-visible:nth-child(5n + 4) {
+  transition-delay: 0.21s;
+}
+
+.logo-cell.is-visible:nth-child(5n + 5) {
+  transition-delay: 0.28s;
+}
+
 .reveal-delay-2.is-visible {
   transition-delay: 0.24s;
 }
@@ -276,5 +366,15 @@ body {
 
   .section {
     padding: 4rem 1.25rem;
+  }
+
+  .logo-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 2.25rem 1.5rem;
+    margin-top: 2.75rem;
+  }
+
+  .logo-cell {
+    height: 62px;
   }
 }
