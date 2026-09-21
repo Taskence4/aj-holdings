@@ -210,6 +210,30 @@ accordions.forEach((details) =>
     transitionDetails(details, open);
   }),
 );
+// The markup ships two identical logo sets; widen the track so one set always
+// covers the viewport, otherwise the loop seam shows a gap on wide screens.
+const tickerTrack = document.querySelector(".hero-ticker-track");
+if (tickerTrack) {
+  const set = [...tickerTrack.children].slice(0, tickerTrack.children.length / 2);
+  const fitTicker = () => {
+    const setWidth = set.reduce((w, el) => w + el.getBoundingClientRect().width, 0);
+    if (!setWidth) return;
+    const copies = Math.ceil(tickerTrack.parentElement.clientWidth / setWidth);
+    const wanted = copies * 2 * set.length;
+    while (tickerTrack.children.length > wanted) tickerTrack.lastElementChild.remove();
+    while (tickerTrack.children.length < wanted) {
+      const clone = set[tickerTrack.children.length % set.length].cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      tickerTrack.append(clone);
+    }
+    // Hold a constant 38px/s regardless of how many copies the width needed.
+    tickerTrack.style.animationDuration = `${(setWidth * copies) / 38}s`;
+  };
+  fitTicker();
+  addEventListener("load", fitTicker);
+  addEventListener("resize", fitTicker, { passive: true });
+}
+
 const heroVideo = document.querySelector("video.hero-image");
 function syncHeroVideo() {
   if (!heroVideo) return;
