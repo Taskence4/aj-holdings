@@ -1,157 +1,267 @@
-/* AJ Holdings — page behaviour.
- *
- * Owns the single source of truth for "where in the story are we": a
- * continuous float in [0, chapters-1] published on window.__ajStory. The WebGL
- * field reads it each frame; the rail and nav read it on change. Nothing here
- * depends on WebGL, so the page degrades to a plain scrolling document.
- */
-(function () {
-  'use strict';
-
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var story = { form: 0, chapter: 0, count: 1 };
-  window.__ajStory = story;
-
-  /* ---------------------------------------------------------------- year */
-
-  var yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-  /* ------------------------------------------------------------- reveals */
-
-  var revealEls = document.querySelectorAll('.reveal');
-
-  if (!('IntersectionObserver' in window)) {
-    Array.prototype.forEach.call(revealEls, function (el) {
-      el.classList.add('is-visible');
-    });
-  } else {
-    var revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
+﻿"use strict";
+const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
+const menuButton = document.querySelector(".menu-toggle");
+const mobileNav = document.querySelector(".mobile-nav");
+let menuAnimation;
+function setMenu(open) {
+  menuAnimation?.cancel();
+  menuButton.setAttribute("aria-expanded", String(open));
+  menuButton.setAttribute(
+    "aria-label",
+    open ? "Close navigation" : "Open navigation",
+  );
+  document.body.classList.toggle("menu-open", open);
+  mobileNav.inert = !open;
+  if (open) {
+    mobileNav.hidden = false;
+    if (!motionPreference.matches) {
+      menuAnimation = mobileNav.animate(
+        [
+          { opacity: 0, transform: "translateY(-12px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        { duration: 320, easing: "cubic-bezier(.22,1,.36,1)" },
+      );
+      mobileNav.querySelectorAll("a").forEach((link, i) => {
+        link.getAnimations().forEach((a) => a.cancel());
+        link.animate(
+          [
+            { opacity: 0, transform: "translateY(14px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          {
+            duration: 400,
+            delay: 65 + i * 38,
+            easing: "cubic-bezier(.22,1,.36,1)",
+            fill: "backwards",
+          },
+        );
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-
-    Array.prototype.forEach.call(revealEls, function (el) {
-      revealObserver.observe(el);
-    });
-  }
-
-  /* ------------------------------------------------------- story progress */
-
-  var chapters = Array.prototype.slice.call(document.querySelectorAll('[data-form]'));
-  var railLinks = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
-  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
-  var masthead = document.getElementById('masthead');
-
-  story.count = chapters.length;
-
-  // Document-space centre of each chapter. Recomputed on resize / reflow.
-  var anchors = [];
-
-  function measure() {
-    var scrollY = window.pageYOffset;
-    anchors = chapters.map(function (el) {
-      var r = el.getBoundingClientRect();
-      return r.top + scrollY + r.height / 2;
-    });
-  }
-
-  function smoothstep(x) {
-    x = x < 0 ? 0 : x > 1 ? 1 : x;
-    return x * x * (3 - 2 * x);
-  }
-
-  var lastChapter = -1;
-
-  function update() {
-    if (!anchors.length) return;
-
-    var c = window.pageYOffset + window.innerHeight / 2;
-
-    var form;
-    if (c <= anchors[0]) {
-      form = 0;
-    } else if (c >= anchors[anchors.length - 1]) {
-      form = anchors.length - 1;
-    } else {
-      var i = 0;
-      while (i < anchors.length - 2 && c > anchors[i + 1]) i++;
-      var span = anchors[i + 1] - anchors[i];
-      // Eased so each chapter holds its shape, then transitions decisively.
-      form = i + smoothstep(span > 0 ? (c - anchors[i]) / span : 0);
     }
-
-    story.form = form;
-
-    var chapter = Math.round(form);
-    if (chapter !== lastChapter) {
-      lastChapter = chapter;
-      story.chapter = chapter;
-      setCurrent(chapter);
+  } else if (!mobileNav.hidden && !motionPreference.matches) {
+    menuAnimation = mobileNav.animate([{ opacity: 1 }, { opacity: 0 }], {
+      duration: 180,
+      easing: "ease-out",
+    });
+    menuAnimation.onfinish = () => {
+      mobileNav.hidden = true;
+    };
+  } else mobileNav.hidden = true;
+}
+menuButton.addEventListener("click", () =>
+  setMenu(menuButton.getAttribute("aria-expanded") !== "true"),
+);
+mobileNav.querySelectorAll("a").forEach((link) =>
+  link.addEventListener("click", () => {
+    setMenu(false);
+    const target = document.querySelector(link.getAttribute("href"));
+    if (target) {
+      target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
     }
-
-    if (masthead) {
-      masthead.classList.toggle('is-stuck', window.pageYOffset > 40);
+  }),
+);
+document.addEventListener("keydown", (event) => {
+  if (menuButton.getAttribute("aria-expanded") !== "true") return;
+  if (event.key === "Escape") {
+    setMenu(false);
+    menuButton.focus();
+  }
+  if (event.key === "Tab") {
+    const items = [menuButton, ...mobileNav.querySelectorAll("a")];
+    const first = items[0],
+      last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
     }
   }
+});
+matchMedia("(min-width: 761px)").addEventListener("change", (event) => {
+  if (event.matches) setMenu(false);
+});
 
-  function setCurrent(index) {
-    var id = chapters[index] ? chapters[index].id : null;
+// Reveal only once. Delays belong to small related groups, never whole sections.
+const revealGroups = [".portfolio-wall > div", ".locations > button"];
+revealGroups.forEach((selector) =>
+  document.querySelectorAll(selector).forEach((el, i) => {
+    el.classList.add("reveal");
+    el.style.setProperty("--reveal-delay", `${Math.min(i % 5, 4) * 55}ms`);
+  }),
+);
+document.querySelector(".portfolio-wall")?.classList.remove("reveal");
+document
+  .querySelectorAll(".strategy")
+  .forEach((el, i) =>
+    el.style.setProperty("--reveal-delay", `${(i % 3) * 55}ms`),
+  );
+let revealObserver;
+if ("IntersectionObserver" in window && !motionPreference.matches) {
+  revealObserver = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove("pending");
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      }),
+    { threshold: 0.08, rootMargin: "0px 0px -24px 0px" },
+  );
+  document.querySelectorAll(".reveal").forEach((el) => {
+    el.classList.add("pending");
+    revealObserver.observe(el);
+  });
+}
 
-    railLinks.forEach(function (a) {
-      a.classList.toggle('is-current', a.getAttribute('data-rail') === id);
-      if (a.getAttribute('data-rail') === id) {
-        a.setAttribute('aria-current', 'true');
-      } else {
-        a.removeAttribute('aria-current');
-      }
-    });
+// One requested frame per scroll update; no background animation loop.
+const header = document.querySelector(".masthead");
+const hero = document.querySelector(".hero");
+const sectionLinks = [
+  ...document.querySelectorAll(".desktop-nav a, .nav-contact"),
+];
+let sectionPositions = [],
+  pageHeight = 1,
+  heroHeight = 1,
+  scrollFrame = 0;
+function measure() {
+  sectionPositions = sectionLinks.map((link) => ({
+    link,
+    top: document.querySelector(link.hash)?.offsetTop ?? 0,
+  }));
+  pageHeight = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  heroHeight = hero.offsetHeight;
+  requestScrollFrame();
+}
+function updateScroll() {
+  scrollFrame = 0;
+  const y = window.scrollY;
+  header.classList.toggle("is-scrolled", y > 45);
+  header.style.setProperty(
+    "--reading-progress",
+    Math.min(1, Math.max(0, y / pageHeight)),
+  );
+  const current = [...sectionPositions]
+    .reverse()
+    .find((item) => y + innerHeight * 0.32 >= item.top);
+  sectionPositions.forEach(({ link }) => {
+    if (link === current?.link) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
+  });
+  if (!motionPreference.matches && innerWidth > 760 && y < heroHeight)
+    hero.style.setProperty("--hero-drift", `${Math.min(48, y * 0.075)}px`);
+  else if (motionPreference.matches || innerWidth <= 760)
+    hero.style.setProperty("--hero-drift", "0px");
+}
+function requestScrollFrame() {
+  if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScroll);
+}
+window.addEventListener("scroll", requestScrollFrame, { passive: true });
+window.addEventListener("resize", measure, { passive: true });
+if ("ResizeObserver" in window)
+  new ResizeObserver(measure).observe(document.body);
+document.fonts.ready.then(measure);
+measure();
 
-    navLinks.forEach(function (a) {
-      a.classList.toggle('is-current', a.getAttribute('href') === '#' + id);
-    });
+// Preserve native details behavior without scripting or with reduced motion.
+const accordions = [...document.querySelectorAll(".asset-list details")];
+const accordionAnimations = new Map();
+function transitionDetails(details, open) {
+  const start = details.getBoundingClientRect().height;
+  accordionAnimations.get(details)?.animation.cancel();
+  details.open = true;
+  details.style.height = "auto";
+  const end = open
+    ? details.getBoundingClientRect().height
+    : details.querySelector("summary").getBoundingClientRect().height + 1;
+  details.style.overflow = "hidden";
+  const animation = details.animate(
+    [{ height: `${start}px` }, { height: `${end}px` }],
+    { duration: 360, easing: "cubic-bezier(.22,1,.36,1)" },
+  );
+  const record = { animation, open };
+  accordionAnimations.set(details, record);
+  animation.onfinish = () => {
+    if (accordionAnimations.get(details) !== record) return;
+    details.open = open;
+    details.style.removeProperty("height");
+    details.style.removeProperty("overflow");
+    accordionAnimations.delete(details);
+  };
+}
+accordions.forEach((details) =>
+  details.querySelector("summary").addEventListener("click", (event) => {
+    if (motionPreference.matches) return;
+    event.preventDefault();
+    // Native grouping is reinstated when reduced motion is requested.
+    accordions.forEach((item) => item.removeAttribute("name"));
+    const open = !(accordionAnimations.get(details)?.open ?? details.open);
+    if (open)
+      accordions.forEach((other) => {
+        if (
+          other !== details &&
+          (accordionAnimations.get(other)?.open ?? other.open)
+        )
+          transitionDetails(other, false);
+      });
+    transitionDetails(details, open);
+  }),
+);
+const heroVideo = document.querySelector("video.hero-image");
+function syncHeroVideo() {
+  if (!heroVideo) return;
+  if (motionPreference.matches) heroVideo.pause();
+  else heroVideo.play().catch(() => {});
+}
+syncHeroVideo();
+motionPreference.addEventListener("change", () => {
+  syncHeroVideo();
+  if (motionPreference.matches) {
+    revealObserver?.disconnect();
+    document
+      .querySelectorAll(".reveal.pending")
+      .forEach((el) => el.classList.remove("pending"));
+    for (const [details, record] of accordionAnimations) {
+      record.animation.cancel();
+      details.open = record.open;
+      details.style.removeProperty("height");
+      details.style.removeProperty("overflow");
+    }
+    accordionAnimations.clear();
+    accordions.forEach((item) => item.setAttribute("name", "asset-class"));
+    menuAnimation?.cancel();
+    mobileNav.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+    mobileNav.hidden = menuButton.getAttribute("aria-expanded") !== "true";
   }
+  requestScrollFrame();
+});
+document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* --------------------------------------------------------- scheduling */
-
-  var ticking = false;
-
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () {
-      ticking = false;
-      update();
-    });
+// Portfolio: one company note open at a time; Escape or a click elsewhere closes it.
+const portfolioLogos = document.querySelectorAll(".portfolio-logo");
+function setPortfolioNote(button, open) {
+  button.setAttribute("aria-expanded", String(open));
+  document.getElementById(button.getAttribute("aria-controls")).hidden = !open;
+}
+portfolioLogos.forEach((button) =>
+  button.addEventListener("click", () => {
+    const open = button.getAttribute("aria-expanded") !== "true";
+    portfolioLogos.forEach((other) => setPortfolioNote(other, false));
+    setPortfolioNote(button, open);
+  }),
+);
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  const open = document.querySelector('.portfolio-logo[aria-expanded="true"]');
+  if (open) {
+    setPortfolioNote(open, false);
+    open.focus();
   }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { measure(); update(); }, { passive: true });
-
-  // Late-loading images (the portfolio wall) change chapter heights.
-  if ('ResizeObserver' in window) {
-    var ro = new ResizeObserver(function () { measure(); update(); });
-    ro.observe(document.body);
-  } else {
-    window.addEventListener('load', function () { measure(); update(); });
-  }
-
-  measure();
-  update();
-
-  /* ------------------------------------------------------- pointer state */
-
-  var pointer = { x: 0, y: 0 };
-  window.__ajPointer = pointer;
-
-  if (!reduced && window.matchMedia('(hover: hover)').matches) {
-    window.addEventListener('pointermove', function (e) {
-      pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-      pointer.y = (e.clientY / window.innerHeight) * 2 - 1;
-    }, { passive: true });
-  }
-})();
+});
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".portfolio-wall"))
+    portfolioLogos.forEach((button) => setPortfolioNote(button, false));
+});

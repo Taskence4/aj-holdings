@@ -1,0 +1,3 @@
+﻿const {chromium}=require('C:/Users/Lenovo/AppData/Local/npm-cache/_npx/705bc6b22212b352/node_modules/playwright');
+(async()=>{const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});const page=await browser.newPage({viewport:{width:1440,height:1000}});await page.goto('https://verkas.framer.website/',{waitUntil:'domcontentloaded'});await page.waitForTimeout(8000); console.log(await page.locator('body').innerText()); for(let y=0;y<await page.evaluate(()=>document.body.scrollHeight);y+=800){await page.evaluate(y=>window.scrollTo(0,y),y);await page.waitForTimeout(250)}await page.screenshot({path:'reference-page.png',fullPage:true});await browser.close()})()
+
