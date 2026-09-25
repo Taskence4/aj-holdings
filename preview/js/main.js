@@ -239,3 +239,29 @@ motionPreference.addEventListener("change", () => {
   requestScrollFrame();
 });
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// Portfolio: one company note open at a time; Escape or a click elsewhere closes it.
+const portfolioLogos = document.querySelectorAll(".portfolio-logo");
+function setPortfolioNote(button, open) {
+  button.setAttribute("aria-expanded", String(open));
+  document.getElementById(button.getAttribute("aria-controls")).hidden = !open;
+}
+portfolioLogos.forEach((button) =>
+  button.addEventListener("click", () => {
+    const open = button.getAttribute("aria-expanded") !== "true";
+    portfolioLogos.forEach((other) => setPortfolioNote(other, false));
+    setPortfolioNote(button, open);
+  }),
+);
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  const open = document.querySelector('.portfolio-logo[aria-expanded="true"]');
+  if (open) {
+    setPortfolioNote(open, false);
+    open.focus();
+  }
+});
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".portfolio-wall"))
+    portfolioLogos.forEach((button) => setPortfolioNote(button, false));
+});

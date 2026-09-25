@@ -1,8 +1,8 @@
 :root {
-  --brand-green: #00852b;
+  --brand-green: #087930;
   --green-text: #006b24;
-  --brand-yellow: #e99b00;
-  --paper: #f9ecdf;
+  --brand-yellow: #e6a50a;
+  --paper: #f7f6f1;
   --forest: #063b25;
   --forest-deep: #042d1c;
   --forest-lift: #085032;
@@ -456,7 +456,7 @@ h2 em {
   display: inline-flex;
   gap: 32px;
   align-items: center;
-  border-bottom: 1px solid #00852b55;
+  border-bottom: 1px solid #08793055;
   padding: 12px 0;
   margin-top: 17px;
 }
@@ -539,7 +539,7 @@ h2 em {
   transition: background 0.3s;
 }
 .principle:hover {
-  background: #f0e2cf;
+  background: #eeece4;
 }
 .index {
   font-size: 10px;
@@ -690,7 +690,7 @@ details p a {
   transition: background 0.3s;
 }
 .portfolio-wall > div:hover {
-  background: #eee4ce;
+  background: #ecebe2;
 }
 .portfolio-wall img {
   height: 55px;
@@ -885,6 +885,33 @@ details p a {
 }
 .footer p {
   color: var(--paper);
+}
+.footer-taglines {
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+.footer-taglines p {
+  margin: 0;
+  letter-spacing: 0.14em;
+}
+.footer .footer-sub {
+  color: var(--on-dark-muted);
+  letter-spacing: 0.04em;
+}
+.footer-flags {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.footer-flags img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #ffffff24;
 }
 .reveal {
   opacity: 1;
@@ -1281,9 +1308,13 @@ details p a {
     font-size: 8px;
     gap: 17px;
   }
-  .footer p {
+  .footer-taglines {
     order: 3;
     width: 100%;
+    text-align: left;
+  }
+  .footer-flags {
+    order: 4;
   }
   .footer > a {
     margin-left: auto;
@@ -1661,7 +1692,7 @@ details p a {
   white-space: nowrap;
   display: flex;
   gap: 25px;
-  border-bottom: 1px solid #e99b0066;
+  border-bottom: 1px solid #e6a50a66;
   padding-bottom: 13px;
   margin-bottom: 4px;
 }
@@ -1849,7 +1880,7 @@ h2 {
   outline-color: var(--brand-yellow);
 }
 .dark .text-link {
-  border-bottom-color: #e99b0066;
+  border-bottom-color: #e6a50a66;
 }
 .dark .text-link span,
 .hero-secondary span {
@@ -1861,7 +1892,7 @@ h2 {
   opacity: 0.85;
 }
 .locations button[aria-pressed="true"] {
-  background: #e99b0012;
+  background: #e6a50a12;
   box-shadow: inset 2px 0 var(--brand-yellow);
 }
 .globe-controls button:hover {
@@ -1944,7 +1975,7 @@ h2 {
     transform: translateY(-4px);
   }
   .strategy:hover {
-    background: #00852b05;
+    background: #08793005;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -2013,5 +2044,115 @@ h2 {
   .reveal {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+/* Portfolio: each logo opens a short company note in place. */
+.portfolio-wall > div {
+  position: relative;
+  padding: 0;
+}
+.portfolio-logo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 15px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.portfolio-logo:focus-visible {
+  outline-offset: -6px;
+}
+.portfolio-wall img {
+  opacity: 1;
+  transform: scale(var(--logo-scale, 1));
+}
+.portfolio-wall > div:hover img {
+  transform: translateY(-3px) scale(var(--logo-scale, 1));
+}
+.portfolio-wall img.logo-lg {
+  --logo-scale: 1.3;
+}
+.portfolio-wall img.logo-sm {
+  --logo-scale: 0.8;
+}
+.portfolio-name {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+.portfolio-note {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 18px 22px;
+  background: var(--forest);
+  color: var(--paper);
+  font-size: 12.5px;
+  line-height: 1.55;
+  pointer-events: none;
+}
+.portfolio-note[hidden] {
+  display: none;
+}
+.portfolio-note strong {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--brand-yellow);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .portfolio-note:not([hidden]) {
+    animation: note-in 0.28s ease both;
+  }
+}
+@keyframes note-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (max-width: 760px) {
+  .portfolio-wall > div {
+    min-height: 168px;
+  }
+  .portfolio-note {
+    gap: 6px;
+    padding: 14px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .portfolio-note strong {
+    font-size: 17px;
+  }
+}
+/* Chairman: link out to the personal site. */
+.button-brand {
+  background: var(--brand-green);
+  color: var(--paper);
+}
+.button-brand:hover {
+  background: var(--forest);
+}
+.founder-link {
+  margin-top: 30px;
+}
+@media (max-width: 760px) {
+  .founder-link {
+    margin-top: 22px;
   }
 }

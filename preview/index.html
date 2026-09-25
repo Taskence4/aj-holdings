@@ -7,9 +7,9 @@
     <title>AJ Holdings — Built for lasting value.</title>
     <meta
       name="description"
-      content="A global investment platform focused on long term value creation across markets, assets and opportunities. One platform. Global reach. Aligned interests."
+      content="A diversified investment holding company focused on long-term value creation across markets, assets and opportunities. Diversified. Disciplined. Enduring."
     />
-    <meta name="theme-color" content="#101917" />
+    <meta name="theme-color" content="#063b25" />
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
@@ -17,12 +17,12 @@
     />
     <meta
       property="og:description"
-      content="A global investment platform focused on long term value creation across markets, assets and opportunities."
+      content="A diversified investment holding company focused on long-term value creation across markets, assets and opportunities."
     />
-    <meta property="og:url" content="https://aj.holdings/preview/" />
+    <meta property="og:url" content="https://aj.holdings/" />
     <meta
       property="og:image"
-      content="https://aj.holdings/preview/assets/waterfront.webp"
+      content="https://aj.holdings/assets/waterfront.webp"
     />
     <link rel="icon" href="favicon.png" type="image/png" />
     <link
@@ -33,12 +33,11 @@
     />
     <link rel="stylesheet" href="assets/fonts.css" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="themes/classic.css" />
     <script src="js/main.js" defer></script>
     <script src="assets/globe-land.js" defer></script>
     <script src="js/globe.js" defer></script>
   </head>
-  <body data-theme="classic">
+  <body>
     <a class="skip" href="#about">Skip to content</a>
     <header class="masthead" id="masthead">
       <a class="wordmark" href="#home" aria-label="AJ Holdings home"
@@ -46,8 +45,8 @@
       >
       <nav class="desktop-nav" aria-label="Primary navigation">
         <a href="#about">About</a><a href="#investments">Investments</a
-        ><a href="#portfolio">Portfolio</a><a href="#global">Global</a
-        ><a href="#leadership">Leadership</a>
+        ><a href="#portfolio">Portfolio</a><a href="#global">Presence</a
+        ><a href="#leadership">Chairman</a>
       </nav>
       <a class="button button-outline nav-contact" href="#contact"
         >Get in Touch <span aria-hidden="true">↗</span></a
@@ -69,7 +68,7 @@
     >
       <a href="#about">About</a><a href="#investments">Investments</a
       ><a href="#strategies">Strategies</a><a href="#portfolio">Portfolio</a
-      ><a href="#global">Global</a><a href="#leadership">Leadership</a
+      ><a href="#global">Presence</a><a href="#leadership">Chairman</a
       ><a href="#contact">Contact ↗</a>
     </nav>
     <main>
@@ -90,7 +89,7 @@
         </video>
         <div class="hero-shade"></div>
         <div class="hero-content">
-          <p class="pill">Global Investment Platform</p>
+          <p class="pill">Diversified. Disciplined. Enduring.</p>
           <h1 id="hero-title">Built for<br /><em>lasting value.</em></h1>
           <p class="hero-description">
             AJ Holdings invests across public and private markets, real assets
@@ -194,8 +193,8 @@
         <div class="about-grid">
           <div class="about-copy reveal">
             <p class="positioning">
-              A global investment platform focused on long term value creation
-              across markets, assets and opportunities.
+              A diversified investment holding company focused on long-term value
+              creation across markets, assets and opportunities.
             </p>
             <p>
               We invest with a long term perspective, allocating capital across
@@ -367,99 +366,200 @@
           </div>
           <p class="heading-copy">
             Selected investments across technology, infrastructure, energy, real
-            estate and emerging industries.
+            estate and emerging industries. Select a logo to learn more.
           </p>
         </div>
         <div class="portfolio-wall reveal">
           <div>
-            <img
-              src="portfolio/web/skyroot.svg"
-              alt="Skyroot"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-skyroot"
+            >
+              <img
+                src="portfolio/web/skyroot.svg"
+                alt="Skyroot" class="logo-lg"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-skyroot" hidden>
+              <strong>Skyroot Aerospace</strong>Private space launch company building rockets to make access to space affordable and routine.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/pace-digitek.png"
-              alt="Pace Digitek"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-pace-digitek"
+            >
+              <img
+                src="portfolio/web/pace-digitek.png"
+                alt="Pace Digitek"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-pace-digitek" hidden>
+              <strong>Pace Digitek</strong>Telecom infrastructure and energy solutions provider supporting network rollout across India.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/GH2Solar.png"
-              alt="GH2 Solar"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-gh2-solar"
+            >
+              <img
+                src="portfolio/web/GH2Solar.png"
+                alt="GH2 Solar"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-gh2-solar" hidden>
+              <strong>GH2 Solar</strong>Green hydrogen company turning solar power into clean fuel, from electrons to molecules.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/88eightyeight.png"
-              alt="88 Eighty Eight Pictures"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-eighty-eight"
+            >
+              <img
+                src="portfolio/web/88eightyeight.png"
+                alt="88 Eighty Eight Pictures"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-eighty-eight" hidden>
+              <strong>88 Eighty Eight Pictures</strong>Media and advertising company.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/skyy-development.png"
-              alt="Skyy Development"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-skyy"
+            >
+              <img
+                src="portfolio/web/skyy-development.png"
+                alt="Skyy Development" class="logo-lg"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-skyy" hidden>
+              <strong>Skyy Development</strong>Real estate developer delivering residential and commercial projects.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/solana.svg"
-              alt="Solana"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-solana"
+            >
+              <img
+                src="portfolio/web/solana.svg"
+                alt="Solana" class="logo-sm"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+              <span class="portfolio-name" aria-hidden="true">Solana</span>
+            </button>
+            <p class="portfolio-note" id="co-solana" hidden>
+              <strong>Solana</strong>High-performance blockchain network for decentralised applications and digital payments.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/grew-solar.svg"
-              alt="Grew Solar"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-grew-solar"
+            >
+              <img
+                src="portfolio/web/grew-solar.svg"
+                alt="Grew Solar"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-grew-solar" hidden>
+              <strong>Grew Solar</strong>Solar module and cell manufacturer supporting India's clean energy transition.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/trident.png"
-              alt="Trident Fruits"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-trident"
+            >
+              <img
+                src="portfolio/web/trident.png"
+                alt="Trident Fruits"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-trident" hidden>
+              <strong>Trident Fruits</strong>Fresh produce business sourcing and supplying quality fruit to growing markets.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/hydgen.svg"
-              alt="Hydgen"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-hydgen"
+            >
+              <img
+                src="portfolio/web/hydgen.svg"
+                alt="Hydgen"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-hydgen" hidden>
+              <strong>Hydgen</strong>Hydrogen technology company developing electrolysers for clean hydrogen production.
+            </p>
           </div>
           <div>
-            <img
-              src="portfolio/web/greenzo-energy.png"
-              alt="Greenzo Energy"
-              width="125"
-              height="55"
-              loading="lazy"
-            />
+            <button
+              type="button"
+              class="portfolio-logo"
+              aria-expanded="false"
+              aria-controls="co-greenzo"
+            >
+              <img
+                src="portfolio/greenzo-energy.svg"
+                alt="Greenzo Energy" class="logo-lg"
+                width="125"
+                height="55"
+                loading="lazy"
+              />
+            </button>
+            <p class="portfolio-note" id="co-greenzo" hidden>
+              <strong>Greenzo Energy</strong>Green hydrogen company manufacturing electrolysers and clean energy solutions.
+            </p>
           </div>
         </div>
       </section>
@@ -573,6 +673,13 @@
             Ankith Jain leads AJ Holdings' investment strategy and long term
             capital allocation across its global portfolio.
           </p>
+          <a
+            class="button button-brand founder-link"
+            href="https://ankithjain.com"
+            target="_blank"
+            rel="noopener"
+            >Know More <span aria-hidden="true">↗</span></a
+          >
         </div>
         <figure class="founder-card reveal">
           <img
@@ -625,7 +732,21 @@
       <span
         >© <span id="year">2026</span> AJ Holdings. All rights reserved.</span
       >
-      <p>One platform. Global reach. Aligned interests.</p>
+      <div class="footer-taglines">
+        <p>ONE PLATFORM . GLOBAL REACH . ALIGNED INTEREST</p>
+        <p class="footer-sub">
+          Centralized Strategy | Decentralised Execution | Local Expertise |
+          Global Opportunities
+        </p>
+      </div>
+      <ul class="footer-flags" aria-label="Markets">
+        <li><img src="flags/ae.svg" alt="United Arab Emirates" title="United Arab Emirates" width="18" height="18" /></li>
+        <li><img src="flags/in.svg" alt="India" title="India" width="18" height="18" /></li>
+        <li><img src="flags/hk.svg" alt="Hong Kong" title="Hong Kong" width="18" height="18" /></li>
+        <li><img src="flags/sg.svg" alt="Singapore" title="Singapore" width="18" height="18" /></li>
+        <li><img src="flags/us.svg" alt="United States" title="United States" width="18" height="18" /></li>
+        <li><img src="flags/gb.svg" alt="United Kingdom" title="United Kingdom" width="18" height="18" /></li>
+      </ul>
       <a href="#home">Back to top ↑</a>
     </footer>
   </body>
