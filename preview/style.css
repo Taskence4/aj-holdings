@@ -2156,3 +2156,31 @@ h2 {
     margin-top: 22px;
   }
 }
+/* About: the photo runs the full height of heading and copy, so the
+   section reads as two balanced columns instead of leaving the top right empty. */
+@media (min-width: 761px) {
+  .section.about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 8%;
+  }
+  .about .section-heading {
+    grid-column: 1;
+    margin-bottom: 44px;
+  }
+  .about-grid {
+    display: contents;
+  }
+  .about-copy {
+    grid-column: 1;
+    align-self: end;
+  }
+  .about-image {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    height: auto;
+    min-height: 480px;
+    margin: 0;
+  }
+}
