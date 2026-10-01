@@ -2211,3 +2211,25 @@ h2 {
     transform: none;
   }
 }
+/* Portfolio: digital assets share one double-width tile. Dense flow lets
+   the next logo fill the gap the wide tile leaves at a row end. */
+.portfolio-wall {
+  grid-auto-flow: dense;
+}
+.portfolio-wall > .portfolio-wide {
+  grid-column: span 2;
+}
+.portfolio-trio {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 3vw, 44px);
+}
+.portfolio-trio img {
+  width: auto;
+  height: 46px;
+}
+@media (max-width: 760px) {
+  .portfolio-trio img {
+    height: 38px;
+  }
+}
