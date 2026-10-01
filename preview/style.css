@@ -2233,3 +2233,24 @@ h2 {
     height: 38px;
   }
 }
+/* Seven single logos + the digital-assets tile: span 3 of 5 on desktop and
+   1 of 2 on phones, so both grids stay complete. */
+.portfolio-wall > .portfolio-wide {
+  grid-column: span 3;
+}
+@media (max-width: 760px) {
+  .portfolio-wall > .portfolio-wide {
+    grid-column: auto;
+  }
+  .portfolio-trio {
+    gap: 12px;
+  }
+  .portfolio-trio img {
+    height: 28px;
+  }
+  .portfolio-wide .portfolio-name {
+    font-size: 8px;
+    line-height: 1.6;
+    text-align: center;
+  }
+}
