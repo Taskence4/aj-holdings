@@ -2184,3 +2184,30 @@ h2 {
     margin: 0;
   }
 }
+/* Chairman: the portrait carries its own branding, so the name sits
+   below the photo instead of over it. */
+.founder-card {
+  overflow: visible;
+  background: none;
+}
+.founder-card img {
+  display: block;
+}
+.founder-card::after {
+  display: none;
+}
+.founder-card figcaption {
+  position: static;
+  padding-top: 22px;
+  color: var(--ink);
+}
+.founder-card figcaption p {
+  margin-top: 4px;
+  color: var(--green-text);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .founder-card:hover img,
+  .founder-card:hover figcaption {
+    transform: none;
+  }
+}
