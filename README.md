@@ -8,7 +8,7 @@ A responsive, static website inspired by the visual direction of https://verkas.
 2. About / investment philosophy — Long term capital. Independent thinking.
 3. Asset classes — the five supplied categories and descriptions.
 4. Investment strategies — the five supplied strategies and descriptions.
-5. Portfolio — eight company logos plus one digital-assets tile (Bitcoin, Ethereum, Solana); selecting one shows a one-sentence company note (draft copy, pending client confirmation).
+5. Portfolio — seven company logos plus one digital-assets tile (Bitcoin, Ethereum, Solana); selecting one shows a one-sentence company note (draft copy, pending client confirmation).
 6. Global platform — six markets and an interactive globe.
 7. Leadership and contact — supplied Chairman profile and final contact CTA.
 
