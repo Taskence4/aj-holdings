@@ -2254,3 +2254,42 @@ h2 {
     text-align: center;
   }
 }
+/* Values & portfolio screening */
+.section.screening {
+  padding-top: 0;
+}
+.screening-card {
+  max-width: 980px;
+  background: #fff;
+  border-left: 3px solid var(--brand-green);
+  padding: 44px 52px;
+}
+.screening-lead {
+  font-size: clamp(17px, 1.45vw, 22px);
+  line-height: 1.6;
+  color: var(--ink);
+}
+.screening-lead strong {
+  font-weight: 700;
+  color: var(--green-text);
+}
+.screening-note {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  max-width: 640px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+@media (max-width: 760px) {
+  .screening-card {
+    padding: 28px 24px;
+  }
+  .screening-lead {
+    font-size: 16px;
+  }
+  .screening-note {
+    font-size: 12px;
+  }
+}
