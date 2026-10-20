@@ -2294,24 +2294,13 @@ h2 {
   }
 }
 
-/* ajcapital.global preview: the supplied logo image replaces the text wordmark. */
-.logo-img {
-  display: block;
-  width: auto;
-  height: auto;
-}
-.wordmark .logo-img {
-  height: 26px;
-}
+/* ajcapital.global preview: the longer name needs a little less room in the footer. */
 .footer-wordmark {
-  display: block;
-}
-.footer-wordmark .logo-img {
-  width: 100%;
-  max-width: 1500px;
+  white-space: nowrap;
+  font-size: clamp(32px, 10.5vw, 170px);
 }
 @media (max-width: 760px) {
-  .wordmark .logo-img {
-    height: 22px;
+  .footer-wordmark {
+    font-size: 9.6vw;
   }
 }
